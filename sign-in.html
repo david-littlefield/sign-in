@@ -13,7 +13,9 @@
             }
         } */
 
-        * {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
             margin: 0px;
             padding: 0px;
@@ -1243,6 +1245,26 @@
             width: 0px;
         }
 
+        .authentication-dropdown-list-item-overlay {
+            background-image: radial-gradient(circle farthest-side, rgba(153, 153, 153, 0.4), rgba(153, 153, 153, 0.4) 80%, rgba(153, 153, 153, 0) 100%);
+            left: 0px;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0px;
+            transform: translate(-50%,-50%) scale(0);
+        }
+
+        .authentication-dropdown-list-item:focus-visible {
+            background-color: rgba(153, 153, 153, 0.4);
+        }
+
+        .authentication-dropdown-list-item[mousedown] .authentication-dropdown-list-item-overlay {
+            opacity: 1;
+            transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+            transform: translate(-50%, -50%) scale(2.2);
+        }
+
         .authentication-hyperlink-list {
             float: right;
             margin-left: -16px;
@@ -1710,28 +1732,6 @@
                 <div class="overlay authentication-overlay">
                 </div>
             </div>
-
-            <style>
-                .authentication-dropdown-list-item-overlay {
-                    background-image: radial-gradient(circle farthest-side, rgba(153, 153, 153, 0.4), rgba(153, 153, 153, 0.4) 80%, rgba(153, 153, 153, 0) 100%);
-                    left: 0px;
-                    opacity: 0;
-                    pointer-events: none;
-                    position: absolute;
-                    top: 0px;
-                    transform: translate(-50%,-50%) scale(0);
-                }
-
-                .authentication-dropdown-list-item:focus-visible {
-                    background-color: rgba(153, 153, 153, 0.4);
-                }
-
-                .authentication-dropdown-list-item[mousedown] .authentication-dropdown-list-item-overlay {
-                    opacity: 1;
-                    transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
-                    transform: translate(-50%, -50%) scale(2.2);
-                }
-            </style>
             <div class="footer authentication-footer">
                 <div class="list authentication-dropdown-list">
                     <div id="footer-dropdown-list-item" class="list-item authentication-dropdown-list-item" tabindex="0">
