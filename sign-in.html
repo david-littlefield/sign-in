@@ -1,0 +1,2233 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="./favicon.png">
+    <title>
+        BluTube
+    </title>
+    <style>
+        /* @media (min-width: 601px) {
+            .authentication-card {
+                margin-top: 24px;
+            }
+        } */
+
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .authentication-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .authentication-column {
+            display:flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-column {
+                margin: auto;
+                min-height: 0px;
+            }
+        }
+
+        .authentication-card {
+            background: #ffffff;
+            flex-grow: 1;
+            overflow: hidden;
+            padding: 24px 24px 36px 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-card {
+                padding: 48px 40px 36px 40px;
+            }
+        }
+
+        @media (min-width: 601px) {
+            .authentication-card {
+                border-radius: 8px;
+                border: 1px solid #dadce0;
+                height: auto;
+                min-height: 502px;
+                transition: 0.2s;
+                width: 450px;
+            }
+        }
+
+        .authentication-progress-bar {
+            display: none;
+            height: 4px;
+            margin-left: -40px;
+            margin-top: -48px;
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            z-index: 5;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-progress-bar {
+                border-radius: 8px 8px 0px 0px;
+            }
+        }
+
+        .authentication-card[loading] .authentication-progress-bar {
+            display: flex;
+        }
+
+        .authentication-progress-bar-background {
+            background-color: #e0e0e0;
+            height: 100%;
+            position: relative;
+            width: 100%;
+        }
+
+        .authentication-progress-bar-animation {
+            animation-play-state: paused;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+
+        .authentication-progress-bar-primary-animation-translate {
+            animation: progress-bar-primary-animation-translate 2s infinite linear;
+        }
+
+        .authentication-progress-bar-primary-animation-scale {
+            animation: progress-bar-primary-animation-scale 2s infinite linear;
+        }
+
+        .authentication-progress-bar-secondary-animation-translate {
+            animation: progress-bar-secondary-animation-translate 2s infinite linear;
+        }
+
+        .authentication-progress-bar-secondary-animation-scale {
+            animation: progress-bar-secondary-animation-scale 2s infinite linear;
+        }
+
+        .authentication-progress-bar-bar {
+            background-color: #1a73e8;
+            height: 100%;
+            width: 100%;
+        }
+
+        @keyframes progress-bar-primary-animation-translate {
+            0% {
+                transform:translateX(-145.166611%);
+            }
+            20% {
+                animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);
+                transform:translateX(-145.166611%);
+            }
+            59.15% {
+                animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
+                transform:translateX(-61.495191%);
+            }
+            to {
+                transform:translateX(55.444446%);
+            }
+        }
+
+        @keyframes progress-bar-primary-animation-scale {
+            0% {
+                transform:scaleX(0.08);
+            }
+            36.65% {
+                animation-timing-function:cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+                transform:scaleX(0.08);
+            }
+            69.15% {
+                animation-timing-function:cubic-bezier(0.06, 0.11, 0.6, 1);
+                transform:scaleX(0.661479);
+            }
+            to {
+                transform:scaleX(0.08);
+            }
+        }
+
+        @keyframes progress-bar-secondary-animation-translate {
+            0% {
+                animation-timing-function:cubic-bezier(0.15, 0, 0.515058, 0.409685);
+                transform:translateX(-54.888891%);
+            }
+            25% {
+                animation-timing-function:cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+                transform:translateX(-17.236978%);
+            }
+            48.35% {
+                animation-timing-function:cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+                transform:translateX(29.497274%);
+            }
+            to {
+                transform:translateX(105.388891%);
+            }
+        }
+
+        @keyframes progress-bar-secondary-animation-scale {
+            0% {
+                animation-timing-function:cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971);
+                transform:scaleX(0.08);
+            }
+            19.15% {
+                animation-timing-function:cubic-bezier(0.152313, 0.196432, 0.648374, 1.004315);
+                transform:scaleX(0.457104);
+            }
+            44.15% {
+                animation-timing-function:cubic-bezier(0.257759, 0.003163, 0.211762, 1.38179);
+                transform:scaleX(0.72796);
+            }
+            to {
+                transform:scaleX(0.08);
+            }
+        }
+
+        .authentication-logo {
+            display: flex;
+            justify-content: center;
+        }
+
+        .authentication-subcontent {
+            /* position: absolute; */
+            top: 0px;
+            left: 0px;
+            right: 0px;
+        }
+
+        #social-sign-in-subcontent {
+            display: none;
+        }
+
+        #email-sign-in-subcontent {
+            display: none;
+        }
+
+        #password-sign-in-subcontent {
+            display: none;
+        }
+
+        #recover-email-subcontent {
+            display: none;
+        }
+
+        #verify-name-subcontent {
+            display: none;
+        }
+
+        #send-email-code-subcontent {
+            /* display: none; */
+        }
+
+        .authentication-heading {
+            color: #202124;
+            font-family: "Google Sans", "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: center;
+        }
+
+        #social-sign-in-heading {
+            margin-top: 16px;
+        }
+
+        #email-sign-in-heading {
+            margin-top: 16px;
+        }
+
+        #password-sign-in-heading {
+            margin-top: 16px;
+        }
+
+        #recover-email-heading {
+            margin-top: 16px;
+        }
+
+        #verify-name-heading {
+            margin-top: 16px;
+        }
+
+        #send-email-code-heading {
+            margin-top: 16px;
+        }
+
+        .authentication-subheading {
+            color: #202124;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 16px;
+            justify-content: center;
+            letter-spacing: 0.1px;
+            line-height: 24px;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .authentication-change-account-button {
+            align-items: center;
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            height: 32px;
+            margin-left: auto;
+            margin-right: auto;
+            outline: none;
+            padding-left: 6px;
+            padding-right: 8px;
+            position: relative;
+        }
+
+        #password-sign-in-change-account-button {
+            margin-top: 8px;
+        }
+
+        .authentication-change-account-button-profile-icon {
+            border-radius: 10px;
+            color: #3c4043;
+            height: 20px;
+            margin-right: 8px;
+            overflow: hidden;
+            width: 20px;
+        }
+
+        .authentication-change-account-button-text {
+            color: #3c4043;
+            font-family: "Google Sans", "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.25px;
+            line-height: 30px;
+        }
+
+        .authentication-change-account-button-chevron-icon {
+            color: #3c4043;
+            height: 18px;
+            margin-left: 4px;
+            width: 18px;
+        }
+
+        .authentication-change-account-button-overlay {
+            border-radius: 16px;
+            bottom: 0px;
+            left: 0px;
+            overflow: hidden;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        .authentication-change-account-button-overlay::before {
+            border-radius: 16px;
+            border: 1px solid #dadce0;
+            bottom: 0px;
+            content: "";
+            left: 0px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        .authentication-change-account-button-overlay::after {
+            border-radius: 16px;
+            border: 1px solid transparent;
+            bottom: 0px;
+            content: "";
+            left: 0px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        .authentication-change-account-button:hover .authentication-change-account-button-overlay::after {
+            background-color: rgba(60, 64, 67, 0.039);
+            border-color: #dadce0;
+        }
+
+        .authentication-change-account-button:focus .authentication-change-account-button-overlay::after,
+        .authentication-change-account-button:active .authentication-change-account-button-overlay::after {
+            background-color: rgba(60, 64, 67, 0.122);
+            border-color: #3c4043;
+        }
+
+        /* #authentication-card[loading] #social-sign-in-content {
+            transform: translate3d(-450px, 0px, 0px);
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1.0);
+        } */
+
+        #social-sign-in-form {
+            margin-top: 24px;
+        }
+
+        @media (min-width: 450px) {
+            #social-sign-in-form {
+                margin-bottom: 16px;
+            }
+        }
+
+        #email-sign-in-form {
+            margin-top: 32px;
+        }
+
+        #password-sign-in-form {
+            margin-top: 48px;
+        }
+
+        #recover-email-form {
+            margin-top: 32px;
+        }
+
+        #verify-name-form {
+            margin-top: 32px;
+        }
+
+        #send-email-code-form {
+            margin-top: 24px;
+        }
+
+        .authentication-account-list {
+            display: flex;
+            flex-direction: column;
+            margin: 0px;
+            padding: 0px;
+            position: relative;
+        }
+
+        .authentication-account-list-item {
+            cursor: pointer;
+            display: flex;
+            flex: 1;
+            list-style: none;
+            margin-left: -24px;
+            margin-right: -24px;
+            outline: none;
+            padding-bottom: 1px;
+            position: relative;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-account-list-item {
+                margin-left: -40px;
+                margin-right: -40px;
+            }
+        }
+
+        .authentication-account-list-item::after {
+            bottom: 0px;
+            border-bottom: 1px solid #dadce0;
+            content: "";
+            height: 0px;
+            left: 24px;
+            position: absolute;
+            right: 24px;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-account-list-item::after {
+                left: 40px;
+                right: 40px;
+            }
+        }
+
+        .authentication-account-list-item-border {
+            display: flex;
+            flex-grow: 1;
+            padding-bottom: 14px;
+            padding-left: 24px;
+            padding-right: 24px;
+            padding-top: 14px;
+            position: relative;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-account-list-item-border {
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+
+        .authentication-account-list-item-icon {
+            border-radius: 14px;
+            height: 28px;
+            overflow: hidden;
+            width: 28px;
+        }
+
+        .authentication-account-list-item-text {
+            color: #3c4043;
+            flex-grow: 1;
+            font-family: "Google Sans", "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 28px;
+            margin-left: 12px;
+        }
+
+        .authentication-account-list-item:hover .authentication-account-list-item-background,
+        .authentication-account-list-item:focus .authentication-account-list-item-background {
+            background: #e8f0fe;
+            height: 100%;
+            margin-left: -24px;
+            margin-right: -24px;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            z-index: -1;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-account-list-item:hover .authentication-account-list-item-background,
+            .authentication-account-list-item:focus .authentication-account-list-item-background {
+                margin-left: -40px;
+                margin-right: -40px;
+            }
+        }
+
+        .authentication-text-field-container {
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            height: 56px;
+            position: relative;
+        }
+
+        #verify-name-last-name-text-field-container {
+            margin-top: 24px;
+        }
+
+        .authentication-text-field {
+            background-color: transparent;
+            border-radius: 4px;
+            border: none;
+            flex-grow: 1;
+            font: 400 16px roboto, robotoDraft, Helvetica, Arial, sans-serif;
+            height: 54px;
+            margin-left: 1px;
+            margin-right: 1px;
+            outline: none;
+            padding: 13px 15px 13px 15px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .authentication-text-field-label {
+            background: #ffffff;
+            color: #5f6368;
+            font: 400 16px roboto, robotoDraft, Helvetica, Arial, sans-serif;
+            left: 8px;
+            margin-top: 0.5px;
+            padding: 0px 8px 0px 8px;
+            pointer-events: none;
+            position: absolute;
+            transform-origin: bottom left;
+            transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            width: auto;
+            z-index: 1;
+        }
+
+        .authentication-text-field:focus ~ .authentication-text-field-label {
+            color: #1a73e8;
+            transform: scale(0.75) translateY(-40px);
+        }
+
+        .authentication-text-field[text]:not([error]):not(:focus) ~ .authentication-text-field-label {
+            transform: scale(0.75) translateY(-40px);
+        }
+
+        .authentication-text-field[error]:focus ~ .authentication-text-field-label {
+            color: #d93025;
+            transform: scale(0.75) translateY(-40px);
+        }
+
+        .authentication-text-field[error][text]:not(:focus) ~ .authentication-text-field-label {
+            color: #d93025;
+            transform: scale(0.75) translateY(-40px);
+        }
+
+        .authentication-text-field-border {
+            background: none;
+            border-radius: 4px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+        }
+
+        .authentication-text-field-border-gray {
+            border: 1px solid #dadce0;
+        }
+
+        .authentication-text-field-border-color {
+            transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .authentication-text-field:focus ~ .authentication-text-field-border-color {
+            border: 2px solid #1a73e8;
+        }
+
+        .authentication-text-field[error]:not(:focus) ~ .authentication-text-field-border-color {
+            border: 1px solid #d93025;
+        }
+
+        .authentication-text-field[error]:focus ~ .authentication-text-field-border-color {
+            border: 2px solid #d93025;
+        }
+
+        .authentication-feedback-error:not([error]) {
+            display: none;
+        }
+
+        .authentication-feedback-error {
+            display: flex;
+            margin-top: 4px;
+        }
+
+        #password-sign-in-password-text-field-feedback-error {
+            padding-bottom: 4.5px
+        }
+
+        #verify-name-first-name-text-field-feedback-error {
+            padding-bottom: 4.5px
+        }
+
+        .authentication-feedback-error-icon {
+            margin-right: 8px;
+        }
+
+        .authentication-feedback-error-text {
+            color: #d93025;
+            display: inline-block;
+            font: 400 12px roboto, robotoDraft, Helvetica, Arial, sans-serif;
+            padding-top: 1.5px;
+        }
+
+        #email-sign-in-email-text-field-feedback-error-text {
+            padding-top: 2px;
+        }
+
+        #recover-email-phone-or-email-text-field-feedback-error-text {
+            padding-top: 2px;
+        }
+
+        .authentication-tertiary-button {
+            background-color: transparent;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-left: -3px;
+            margin-top: 8.5px;
+            padding: 2px 3px 2px 3px;
+        }
+
+        #email-sign-in-forgot-email-button {
+            display: block;
+        }
+
+        .authentication-tertiary-button:focus {
+            background-color: #1a73e826;
+            outline: none;
+        }
+
+        .authentication-tertiary-button-text {
+            color: #1a73e8;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.25px;
+        }
+
+        .authentication-tertiary-button:focus .authentication-tertiary-button-text {
+            color: #174ea6;
+        }
+
+        .authentication-text {
+            color: #5f6368;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            line-height: 14px;
+            margin-top: 47px;
+        }
+
+        #email-sign-in-guest-mode-text {
+            display: inline-block;
+        }
+
+        .authentication-subtext {
+            color: #202124;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        #send-email-code-subtext {
+            margin-bottom: 16px;
+            margin-left: -24px;
+            margin-right: -24px;
+            margin-top: 10px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        @media (min-width: 450px) {
+            #send-email-code-subtext {
+                margin-left: -40px;
+                margin-right: -40px;
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+
+        .authentication-subcontent-hyperlink {
+            background-color: transparent;
+            border-radius: 4px;
+            border: none;
+            color: #1a73e8;
+            cursor: pointer;
+            display: inline-block;
+            margin-left: -3px;
+            margin-top: 1px;
+            padding: 2px 3px 2px 3px;
+            text-decoration: none;
+        }
+
+        #email-sign-in-learn-more-hyperlink {
+            display: inline-block;
+        }
+
+        .authentication-subcontent-hyperlink:focus {
+            background-color: #1a73e826;
+            outline: none;
+        }
+
+        .authentication-subcontent-hyperlink-text {
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.25px;
+            line-height: 20px;
+        }
+
+        .authentication-subcontent-hyperlink:focus .authentication-subcontent-hyperlink-text {
+            color: #174ea6;
+        }
+
+        .authentication-checkbox-container {
+            align-items: center;
+            display: inline-flex;
+            height: 48px;
+            margin-left: -12px;
+            margin-top: -4px;
+        }
+
+        .authentication-checkbox {
+            cursor: pointer;
+            height: 48px;
+            margin: 0px;
+            opacity: 0;
+            position: absolute;
+            width: 48px;
+        }
+
+        .authentication-checkbox-icon {
+            background-color: transparent;
+            border-color: #5f6368;
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 2px;
+            height: 18px;
+            margin-left: 15px;
+            pointer-events: none;
+            position: absolute;
+            width: 18px;
+        }
+
+        .authentication-checkbox:focus ~ .authentication-checkbox-icon,
+        .authentication-checkbox:hover ~ .authentication-checkbox-icon {
+            border-color: #202124;
+        }
+
+        .authentication-checkbox:checked ~ .authentication-checkbox-icon {
+            border-color: #1a73e8;
+            background-color: #1a73e8;
+        }
+
+        .authentication-checkbox:checked:hover ~ .authentication-checkbox-icon,
+        .authentication-checkbox:checked:focus ~ .authentication-checkbox-icon {
+            border-color: #174ea6;
+            background-color: #174ea6;
+        }
+
+        .authentication-checkbox-image {
+            opacity: 0;
+        }
+
+        .authentication-checkbox:checked ~ .authentication-checkbox-icon .authentication-checkbox-image {
+            opacity: 1;
+            transition: opacity 180ms 0ms cubic-bezier(0.0, 0.0, 0.2, 1.0);
+        }
+
+        .authentication-checkbox-background {
+            border-radius: 20px;
+            display: inline-flex;
+            height: 40px;
+            margin: 4px;
+            position: absolute;
+            width: 40px;
+            z-index: -1;
+        }
+
+        .authentication-checkbox-background::before {
+            background-color: #3c4043;
+            border-radius: 50%;
+            content: "";
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 15ms linear;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .authentication-checkbox:hover ~ .authentication-checkbox-background::before {
+            opacity: 0.04;
+        }
+
+        .authentication-checkbox:focus ~ .authentication-checkbox-background::before {
+            transition-duration: 75ms;
+            opacity: 0.12;
+        }
+
+        .authentication-checkbox:checked ~ .authentication-checkbox-background::before {
+            background-color: #1a73e8;
+        }
+
+        .authentication-checkbox-background::after {
+            background-color: #3c4043;
+            border-radius: 50%;
+            content: "";
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 15ms linear;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .authentication-checkbox:active ~ .authentication-checkbox-background::after {
+            transition-duration: 75ms;
+            opacity: 0.10;
+        }
+
+        .authentication-checkbox:checked ~ .authentication-checkbox-background::after {
+            background-color: #1a73e8;
+        }
+
+        .authentication-checkbox-label {
+            color: #202124;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+            margin-left: 52px;
+            vertical-align: middle;
+        }
+
+        .authentication-buttons-container {
+            height: 36px;
+            justify-content: space-between;
+        }
+
+        #email-sign-in-buttons-container {
+            margin-bottom: 26px;
+            margin-top: 33px;
+        }
+
+        #password-sign-in-buttons-container {
+            margin-top: 33.5px;
+        }
+
+        #recover-email-buttons-container {
+            margin-top: 32px;
+        }
+
+        #verify-name-buttons-container {
+            margin-top: 32px;
+        }
+
+        #send-email-code-buttons-container {
+            margin-top: 32px;
+            margin-bottom: 26px;
+        }
+
+        .authentication-secondary-button {
+            background-color: transparent;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            float: left;
+            height: 36px;
+            margin-left: -8px;
+            padding: 0px 8px 0px 8px;
+            position: relative;
+        }
+
+        .authentication-secondary-button:focus {
+            outline: none;
+        }
+
+        .authentication-secondary-button-overlay {
+            border-radius: 4px;
+            bottom: 0px;
+            left: 0px;
+            overflow: hidden;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: 0;
+        }
+
+        .authentication-secondary-button-overlay::before {
+            background-color: #1a73e8;
+            border-radius: 4px;
+            bottom: 0px;
+            content: "";
+            left: 0px;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            transition: opacity 15ms linear, background-color 15ms linear;
+            z-index: 1;
+        }
+
+        .authentication-secondary-button:hover .authentication-secondary-button-overlay::before{
+            opacity: 0.04;
+        }
+
+        .authentication-secondary-button:focus .authentication-secondary-button-overlay::before {
+            transition-duration: 75ms;
+            opacity: 0.12;
+        }
+
+        .authentication-secondary-button-overlay::after {
+            background-color: #1a73e8;
+            border-radius: 50%;
+            content: "";
+            height: 36px;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 150ms linear;
+            width: 36px;
+            z-index: 0;
+        }
+
+        .authentication-secondary-button[mousedown] .authentication-secondary-button-overlay::after {
+            animation: secondary-button-ripple-animation-radius 225ms forwards, secondary-button-ripple-animation-opacity 75ms forwards;
+            transform-origin: center center;
+        }
+
+        @keyframes secondary-button-ripple-animation-radius {
+            0% {
+                animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+                transform: translate(var(--x-coordinate), var(--y-coordinate)) scale(1.0);
+            }
+            100% {
+                transform: translate(var(--x-offset), 0px) scale(4.40);
+            }
+        }
+
+        @keyframes secondary-button-ripple-animation-opacity {
+            0% {
+                animation-timing-function: linear;
+                opacity: 0.0;
+            }
+            100% {
+                opacity: 0.12;
+            }
+        }
+
+        .authentication-secondary-button-text {
+            -webkit-font-smoothing: antialiased;
+            color: #1a73e8;
+            font-family: "Google Sans", roboto, Arial, sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.1875px;
+            line-height: 25px;
+        }
+
+        #email-sign-in-create-account-button-text {
+            font-size: 17.5px;
+        }
+
+        #password-sign-in-forgot-password-button-text {
+            font-size: 14px;
+        }
+
+        .authentication-secondary-button:focus .authentication-secondary-button-text,
+        .authentication-secondary-button:hover .authentication-secondary-button-text {
+            color: #174ea6;
+        }
+
+        .authentication-primary-button {
+            background-color: #1a73e8;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            float: right;
+            height: 36px;
+            padding: 0px 24px 0px 24px;
+            position: relative;
+            transition: border 280ms cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 280ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .authentication-primary-button:hover {
+            box-shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        }
+
+        .authentication-primary-button:active {
+            box-shadow: 0px 1px 2px 0px rgba(60, 64, 67, 0.3), 0px 2px 6px 2px rgba(60, 64, 67, 0.15);
+        }
+
+        .authentication-primary-button:focus {
+            outline: none;
+        }
+
+        .authentication-primary-button-overlay {
+            border-radius: 4px;
+            bottom: 0px;
+            left: 0px;
+            overflow: hidden;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: 0;
+        }
+
+        .authentication-primary-button-overlay::before {
+            background-color: #202124;
+            border-radius: 4px;
+            bottom: 0px;
+            content: "";
+            left: 0px;
+            opacity: 0;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            transition: opacity 15ms linear, background-color 15ms linear;
+            z-index: 1;
+        }
+
+        .authentication-primary-button:hover .authentication-primary-button-overlay::before {
+            opacity: 0.16;
+        }
+
+        .authentication-primary-button:focus .authentication-primary-button-overlay::before {
+            opacity: 0.24;
+        }
+
+        .authentication-primary-button-overlay::after {
+            background-color: #202124;
+            border-radius: 50%;
+            content: "";
+            height: 36px;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 150ms linear;
+            width: 36px;
+            z-index: 0;
+        }
+
+        .authentication-primary-button[mousedown] .authentication-primary-button-overlay::after {
+            animation: primary-button-ripple-animation-radius 225ms forwards, primary-button-ripple-animation-opacity 75ms forwards;
+            transform-origin: center center;
+        }
+
+        @keyframes primary-button-ripple-animation-radius {
+            0% {
+                animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translate(var(--x-coordinate), var(--y-coordinate)) scale(1);
+            }
+            100% {
+                transform: translate(var(--x-offset), 0px) scale(2.88);
+            }
+        }
+
+        @keyframes primary-button-ripple-animation-opacity {
+            0% {
+                animation-timing-function: linear;
+                opacity: 0.0;
+            }
+            100% {
+                opacity: 0.20;
+            }
+        }
+
+        .authentication-primary-button-text {
+            -webkit-font-smoothing: antialiased;
+            color: #ffffff;
+            font-family: "Google Sans", roboto, Arial, sans-serif;
+            font-size: 17.5px;
+            font-weight: 500;
+            letter-spacing: 0.1875px;
+            line-height: 25px;
+            position: relative;
+        }
+
+        .authentication-graphic {
+            position: relative;
+            margin-left: -24px;
+            margin-right: -24px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        @media (min-width: 450px) {
+            #send-email-code-graphic {
+                margin-left: -40px;
+                margin-right: -40px;
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+
+        .authentication-graphic-image {
+            height: 25vh;
+            min-height: 110px;
+            position: relative;
+            z-index: 3;
+        }
+
+        @media (min-width: 601px) {
+            #send-email-code-graphic-image {
+                height: 150px;
+            }
+        }
+
+        .authentication-graphic-background {
+            background-image: linear-gradient(to bottom,rgba(233, 233, 233, 0) 0%, rgba(233, 233, 233, 0) 62.22%, rgba(233, 233, 233, 1) 40.22%, rgba(233, 233, 233, 0) 100%);
+            height: 100%;
+            left: 0px;
+            overflow: hidden;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: 2;
+        }
+
+        .authentication-graphic-background::before {
+            background-image: linear-gradient(to bottom, rgba(243, 243, 243, 0) 0%, rgba(243, 243, 243, 0.9) 100%);
+            bottom: -10%;
+            content: "";
+            height: 100%;
+            min-width: 110px;
+            position: absolute;
+            right: -10%;
+            transform: rotate(-104deg);
+            width: 25vh;
+            z-index: 2;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-graphic-background::before {
+                width: 150px;
+            }
+        }
+
+        .authentication-graphic-background::after {
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%);
+            bottom: -80%;
+            content: "";
+            height: 100%;
+            min-width: 110px;
+            position: absolute;
+            right: -10%;
+            transform: rotate(-104deg);
+            width: 25vh;
+            z-index: 2;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-graphic-background::after {
+                width: 150px;
+            }
+        }
+
+        .authentication-card[loading] .authentication-overlay {
+            background-color: #ffffff;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.5;
+            right: 0px;
+            top: 0px;
+            position: absolute;
+            z-index: 4;
+        }
+
+        .authentication-footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0px 24px 14px 24px;
+            position: relative;
+            width: 100%;
+        }
+
+        @media (min-width: 450px) {
+            .authentication-footer {
+                padding-left: 40px;
+                padding-right: 40px;
+                /* padding-bottom: 20px; */
+            }
+        }
+
+        @media (min-width: 601px) {
+            .authentication-footer {
+                padding: 17px 0px 0px 0px;
+            }
+        }
+
+        .authentication-dropdown-list {
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            float: left;
+            margin: -2px 16px 2px -16px;
+            outline: none;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-dropdown-list {
+                margin: -2px 0px 0px -15px;
+            }
+        }
+
+        .authentication-dropdown-list-item {
+            display: flex;
+            height: 32.8px;
+            overflow: hidden;
+            outline: none;
+            padding: 8px 8px 8px 16px;
+            position: relative;
+            user-select: none;
+        }
+
+        .authentication-dropdown-list-item-text {
+            color: #202124;
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 12px;
+            line-height: 16.8px;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .authentication-dropdown-list-item-icon {
+            border-color: #444444 transparent transparent transparent;
+            border-style: solid;
+            border-width: 4px 4px 0px 4px;
+            height: 0px;
+            margin-left: 8px;
+            margin-top: 6px;
+            pointer-events: none;
+            width: 0px;
+        }
+
+        .authentication-hyperlink-list {
+            float: right;
+            margin-bottom: 8px;
+            margin-left: -16px;
+            margin-right: -16px;
+            margin-top: 0px;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-hyperlink-list {
+                margin-right: -15px;
+            }
+        }
+
+        .authentication-hyperlink-list-item {
+            display: inline-block;
+        }
+
+        .authentication-hyperlink-list-item-hyperlink {
+            background-color: transparent;
+            border-radius: 2px;
+            color: #757575;
+            cursor: pointer;
+            display: inline-block;
+            outline: none;
+            padding: 6px 16px 6px 16px;
+            text-decoration: none;
+        }
+
+        .authentication-hyperlink-list-item-hyperlink:active,
+        .authentication-hyperlink-list-item-hyperlink:focus {
+            background-color: #eeeeee;
+        }
+
+        @media (min-width: 601px) {
+            .authentication-hyperlink-list-item-hyperlink:active,
+            .authentication-hyperlink-list-item-hyperlink:focus {
+                background-color: #e0e0e0;
+            }
+        }
+
+        .authentication-hyperlink-list-item-text {
+            font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16.8px;
+        }
+
+        @font-face {
+            font-family: "Google Sans";
+            font-style: normal;
+            font-weight: 400;
+            src: url(./google-sans-normal.woff2) format(woff2);
+        }
+
+        @font-face {
+            font-family: "Google Sans";
+            font-style: normal;
+            font-weight: 500;
+            src: url(./google-sans-medium.woff2) format(woff2);
+        }
+
+        @font-face {
+            font-family: roboto;
+            font-style: normal;
+            font-weight: 400;
+            src: url(./roboto-normal.woff2) format(woff2);
+        }
+
+        @font-face {
+            font-family: roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(./roboto-medium.woff2) format(woff2);
+        }
+
+        @font-face {
+            font-family: roboto;
+            font-style: normal;
+            font-weight: 700;
+            src: url(./roboto-bold.woff2) format(woff2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container authentication-container">
+        <div class="column authentication-column">
+            <div class="card authentication-card">
+                <div class="progress-bar authentication-progress-bar">
+                    <div class="background authentication-progress-bar-background">
+                        <div class="animation authentication-progress-bar-animation authentication-progress-bar-primary-animation-translate">
+                            <div class="animation authentication-progress-bar-animation authentication-progress-bar-primary-animation-scale">
+                                <div class="bar authentication-progress-bar-bar">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="animation authentication-progress-bar-animation authentication-progress-bar-secondary-animation-translate">
+                            <div class="animation authentication-progress-bar-animation authentication-progress-bar-secondary-animation-scale">
+                                <div class="bar authentication-progress-bar-bar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo authentication-logo">
+                    <img class="image authentication-logo-image" height="24" width="75" src="./blutubelogo_30.png">
+                </div>
+                <div class="content authentication-content">
+
+                    <div id="social-sign-in-subcontent" class="subcontent authentication-subcontent">
+                        <h1 id="social-sign-in-heading" class="heading authentication-heading">
+                            Sign in
+                        </h1>
+                        <div id="social-sign-in-subheading" class="subheading authentication-subheading">
+                            to continue to BluTube
+                        </div>
+                        <form id="social-sign-in-form" class="form authentication-form" method="post" novalidate>
+                            <ul id="social-sign-in-list" class="list authentication-account-list">
+                                <li id="social-sign-in-apple-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./apple.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with Apple
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-google-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./google.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with Google
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-facebook-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./facebook.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with Facebook
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-linkedin-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./linkedin.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with LinkedIn
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-twitter-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./twitter.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with Twitter
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-email-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./email.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Sign in with email
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="social-sign-in-create-account-list-item" class="list-item authentication-account-list-item" tabindex="0">
+                                    <div class="border authentication-account-list-item-border">
+                                        <div class="icon authentication-account-list-item-icon">
+                                            <img class="image authentication-account-list-item-image" height="28" width="28" src="./account.png">
+                                        </div>
+                                        <div class="text authentication-account-list-item-text">
+                                            Create an account
+                                        </div>
+                                        <div class="background authentication-account-list-item-background">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+
+                    <div id="email-sign-in-subcontent" class="subcontent authentication-subcontent">
+                        <h1 id="email-sign-in-heading" class="heading authentication-heading">
+                            Sign in
+                        </h1>
+                        <div id="email-sign-in-subheading" class="subheading authentication-subheading">
+                            to continue to BluTube
+                        </div>
+                        <form id="email-sign-in-form" class="form authentication-form" method="post" novalidate>
+                            <div class="container authentication-text-field-container">
+                                <input id="email-sign-in-email-text-field" class="text-field authentication-text-field" type="text">
+                                <div class="label authentication-text-field-label">
+                                    Email or phone
+                                </div>
+                                <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                                </div>
+                                <div class="border authentication-text-field-border authentication-text-field-border-color">
+                                </div>
+                            </div>
+                            <div class="container authentication-feedback-container">
+                                <div class="feedback-hint authentication-feedback-hint">
+                                    <div class="text authentication-feedback-hint-text">
+                                    </div>
+                                </div>
+                                <div id="email-sign-in-email-text-field-feedback-error" class="feedback-error authentication-feedback-error">
+                                    <div class="icon authentication-feedback-error-icon">
+                                        <img class="image authentication-feedback-error-image" src="./error.svg">
+                                    </div>
+                                    <div id="email-sign-in-email-text-field-feedback-error-text" class="text authentication-feedback-error-text">
+                                        Enter an email or phone number
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <button id="email-sign-in-forgot-email-button" class="button authentication-tertiary-button">
+                            <div id="email-sign-in-forgot-email-button-text" class="text authentication-tertiary-button-text">
+                                Forgot email?
+                            </div>
+                        </button>
+                        <div id="email-sign-in-guest-mode-text" class="text authentication-text">
+                            Not your computer? Use Guest mode to sign in privately.&nbsp;
+                        </div>
+                        <a id="email-sign-in-learn-more-hyperlink" class="hyperlink authentication-subcontent-hyperlink" href="javascript:void(0)" target="_blank">
+                            <div id="email-sign-in-learn-more-hyperlink-text" class="text authentication-subcontent-hyperlink-text">
+                                Learn more
+                            </div>
+                        </a>
+                        <div id="email-sign-in-buttons-container" class="container authentication-buttons-container">
+                            <button id="email-sign-in-create-account-button" class="button authentication-secondary-button">
+                                <div class="overlay authentication-secondary-button-overlay">
+                                </div>
+                                <div id="email-sign-in-create-account-button-text" class="text authentication-secondary-button-text">
+                                    Create account
+                                </div>
+                            </button>
+                            <button id="email-sign-in-next-button" class="button authentication-primary-button">
+                                <div class="overlay authentication-primary-button-overlay">
+                                </div>
+                                <div class="text authentication-primary-button-text">
+                                    Next
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="password-sign-in-subcontent" class="subcontent authentication-subcontent">
+                    <h1 id="password-sign-in-heading" class="heading authentication-heading">
+                        Hi Junk
+                    </h1>
+                    <button id="password-sign-in-change-account-button" class="button authentication-change-account-button">
+                        <div class="icon authentication-change-account-button-icon authentication-change-account-button-profile-icon">
+                            <img class="image authentication-change-account-button-image" height="20" width="20" src="./profile.png">
+                        </div>
+                        <div class="text authentication-change-account-button-text">
+                            junkmailpdx1011@gmail.com
+                        </div>
+                        <div class="icon authentication-change-account-button-icon authentication-change-account-button-chevron-icon">
+                            <img class="image authentication-change-account-button-image" src="./chevron.svg">
+                        </div>
+                        <div class="overlay authentication-change-account-button-overlay">
+                        </div>
+                    </button>
+                    <form id="password-sign-in-form" class="form authentication-form" method="post" novalidate>
+                        <div class="container authentication-text-field-container">
+                            <input id="password-sign-in-password-text-field" class="text-field authentication-text-field" type="password">
+                            <div class="label authentication-text-field-label">
+                                Enter your password
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-color">
+                            </div>
+                        </div>
+                        <div class="container authentication-feedback-container">
+                            <div class="feedback-hint authentication-feedback-hint">
+                                <div class="text authentication-feedback-hint-text">
+                                </div>
+                            </div>
+                            <div id="password-sign-in-password-text-field-feedback-error" class="feedback-error authentication-feedback-error">
+                                <div class="icon authentication-feedback-error-icon">
+                                    <img class="image authentication-feedback-error-image" height="16" width="16" src="./error.svg">
+                                </div>
+                                <div id="password-sign-in-password-text-field-feedback-error-text" class="text authentication-feedback-error-text">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="container authentication-checkbox-container">
+                        <input id="password-sign-in-show-password-checkbox" class="checkbox authentication-checkbox" type="checkbox">
+                        <div class="icon authentication-checkbox-icon">
+                            <img class="image authentication-checkbox-image" height="14" width="14" src="./checkmark.svg">
+                        </div>
+                        <div class="background authentication-checkbox-background">
+                        </div>
+                        <div id="password-sign-in-show-password-checkbox-label" class="label authentication-checkbox-label">
+                            Show password
+                        </div>
+                    </div>
+                    <div id="password-sign-in-buttons-container" class="container authentication-buttons-container">
+                        <button id="password-sign-in-forgot-password-button" class="button authentication-secondary-button">
+                            <div class="overlay authentication-secondary-button-overlay">
+                            </div>
+                            <div id="password-sign-in-forgot-password-button-text" class="text authentication-secondary-button-text">
+                                Forgot password?
+                            </div>
+                        </button>
+                        <button id="password-sign-in-next-button" class="button authentication-primary-button">
+                            <div class="overlay authentication-primary-button-overlay">
+                            </div>
+                            <div class="text authentication-primary-button-text">
+                                Next
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="recover-email-subcontent" class="subcontent authentication-subcontent">
+                    <h1 id="recover-email-heading" class="heading authentication-heading">
+                        Find your email
+                    </h1>
+                    <div id="recover-email-subheading" class="subheading authentication-subheading">
+                        Enter your phone number or recovery email
+                    </div>
+                    <form id="recover-email-form" class="form authentication-form" method="post" novalidate>
+                        <div class="container authentication-text-field-container">
+                            <input id="recover-email-phone-or-email-text-field" class="text-field authentication-text-field" type="text">
+                            <div class="label authentication-text-field-label">
+                                Phone number or email
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-color">
+                            </div>
+                        </div>
+                        <div class="container authentication-feedback-container">
+                            <div class="feedback-hint authentication-feedback-hint">
+                                <div class="text authentication-feedback-hint-text">
+                                </div>
+                            </div>
+                            <div id="recover-email-phone-or-email-text-field-feedback-error" class="feedback-error authentication-feedback-error">
+                                <div class="icon authentication-feedback-error-icon">
+                                    <img class="image authentication-feedback-error-image" height="16" width="16" src="./error.svg">
+                                </div>
+                                <div id="recover-email-phone-or-email-text-field-feedback-error-text" class="text authentication-feedback-error-text">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="recover-email-buttons-container" class="container authentication-buttons-container">
+                        <button id="recover-email-next-button" class="button authentication-primary-button">
+                            <div class="overlay authentication-primary-button-overlay">
+                            </div>
+                            <div class="text authentication-primary-button-text">
+                                Next
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="verify-name-subcontent" class="subcontent authentication-subcontent">
+                    <h1 id="verify-name-heading" class="heading authentication-heading">
+                        What's your name?
+                    </h1>
+                    <div id="verify-name-subheading" class="subheading authentication-subheading">
+                        Enter the name on your BluTube account
+                    </div>
+                    <form id="verify-name-form" class="form authentication-form" method="post" novalidate>
+                        <div class="container authentication-text-field-container">
+                            <input id="verify-name-first-name-text-field" class="text-field authentication-text-field" type="text">
+                            <div class="label authentication-text-field-label">
+                                First name
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-color">
+                            </div>
+                        </div>
+                        <div id="verify-name-last-name-text-field-container" class="container authentication-text-field-container">
+                            <input id="verify-name-last-name-text-field" class="text-field authentication-text-field" type="text">
+                            <div class="label authentication-text-field-label">
+                                Last name
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-color">
+                            </div>
+                        </div>
+                        <div class="container authentication-feedback-container">
+                            <div class="feedback-hint authentication-feedback-hint">
+                                <div class="text authentication-feedback-hint-text">
+                                </div>
+                            </div>
+                            <div id="verify-name-first-name-text-field-feedback-error" class="feedback-error authentication-feedback-error">
+                                <div class="icon authentication-feedback-error-icon">
+                                    <img class="image authentication-feedback-error-image" height="16" width="16" src="./error.svg">
+                                </div>
+                                <div id="verify-name-first-name-text-field-feedback-error-text" class="text authentication-feedback-error-text">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="verify-name-buttons-container" class="container authentication-buttons-container">
+                        <button id="verify-name-next-button" class="button authentication-primary-button">
+                            <div class="overlay authentication-primary-button-overlay">
+                            </div>
+                            <div class="text authentication-primary-button-text">
+                                Next
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="send-email-code-subcontent" class="subcontent authentication-subcontent">
+                    <h1 id="send-email-code-heading" class="heading authentication-heading">
+                        Get a verification code
+                    </h1>
+                    <div id="send-email-code-subheading" class="subheading authentication-subheading">
+                        To help keep your account safe, Google wants to make sure it's really you trying to sign in
+                    </div>
+                    <form id="send-email-code-form" class="form authentication-form" method="post" novalidate>
+                        <div id="send-email-code-graphic" class="graphic authentication-graphic">
+                            <img id="send-email-code-graphic-image" class="image authentication-graphic-image" src="./account-recovery-email.gif">
+                            <div class="background authentication-graphic-background">
+                            </div>
+                        </div>
+                    </form>
+                    <div id="send-email-code-subtext" class="authentication-subtext">
+                        Google will send a verification code to david_littlefield@outlook.com
+                    </div>
+                    <div id="send-email-code-buttons-container" class="container authentication-buttons-container">
+                        <button id="send-email-code-send-button" class="button authentication-primary-button">
+                            <div class="overlay authentication-primary-button-overlay">
+                            </div>
+                            <div class="text authentication-primary-button-text">
+                                Send
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overlay authentication-overlay">
+                </div>
+            </div>
+
+            <style>
+                .authentication-dropdown-list-item-overlay {
+                    background-image: radial-gradient(circle farthest-side, rgba(153, 153, 153, 0.4), rgba(153, 153, 153, 0.4) 80%, rgba(153, 153, 153, 0) 100%);
+                    left: 0px;
+                    opacity: 0;
+                    pointer-events: none;
+                    position: absolute;
+                    top: 0px;
+                    transform: translate(-50%,-50%) scale(0);
+                }
+
+                .authentication-dropdown-list-item:focus-visible {
+                    background-color: rgba(153, 153, 153, 0.4);
+                }
+
+                .authentication-dropdown-list-item[mousedown] .authentication-dropdown-list-item-overlay {
+                    opacity: 1;
+                    transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+                    transform: translate(-50%, -50%) scale(2.2);
+                }
+            </style>
+            <div class="footer authentication-footer">
+                <div class="list authentication-dropdown-list">
+                    <div id="footer-dropdown-list-item" class="list-item authentication-dropdown-list-item" tabindex="0">
+                        <div class="text authentication-dropdown-list-item-text">
+                            English (United States)
+                        </div>
+                        <div class="icon authentication-dropdown-list-item-icon">
+                        </div>
+                        <div class="overlay authentication-dropdown-list-item-overlay">
+                        </div>
+                    </div>
+                </div>
+                <ul class="list authentication-hyperlink-list">
+                    <li class="list-item authentication-hyperlink-list-item">
+                        <a class="hyperlink authentication-hyperlink-list-item-hyperlink" href="javascript:void(0)" tabindex="0">
+                            <div class="text authentication-hyperlink-list-item-text">
+                                Help
+                            </div>
+                        </a>
+                    </li>
+                    <li class="list-item authentication-hyperlink-list-item">
+                        <a class="hyperlink authentication-hyperlink-list-item-hyperlink" href="javascript:void(0)" tabindex="0">
+                            <div class="text authentication-hyperlink-list-item-text">
+                                Privacy
+                            </div>
+                        </a>
+                    </li>
+                    <li class="list-item authentication-hyperlink-list-item">
+                        <a class="hyperlink authentication-hyperlink-list-item-hyperlink" href="javascript:void(0)" tabindex="0">
+                            <div class="text authentication-hyperlink-list-item-text">
+                                Terms
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function removeWhitespaceFromHtml() {
+        const html = document.querySelector("html");
+        const closingBracketPattern = /(>\s+)/gm;
+        const openingBracketPattern = /(\s+<)/gm;
+        let innerHtml = html.innerHTML;
+        innerHtml = innerHtml.replace(closingBracketPattern, ">");
+        innerHtml = innerHtml.replace(openingBracketPattern, "<");
+        html.innerHTML = innerHtml;
+    }
+
+    removeWhitespaceFromHtml();
+
+    function addTextFieldEventListeners() {
+        const textFields = document.querySelectorAll(".authentication-text-field");
+        if (textFields.length > 0) {
+            textFields.forEach(function(textField) {
+                textField.addEventListener("input", handleTextFieldInputEvent);
+            });
+        }
+    }
+
+    function handleTextFieldInputEvent(event) {
+        const textField = event.target;
+        if (textField) {
+            const textFieldValue = textField.value;
+            const textFieldId = textField.id;
+            const textFieldSelector = `#${textFieldId}`;
+            if (textFieldValue && textFieldId) {
+                addAttributeToElement("text", "", textFieldSelector);
+            }
+            if (!textFieldValue && textFieldId) {
+                removeAttributeFromElement("text", textFieldSelector);
+            }
+        }
+    }
+
+    function addAttributeToElement(attribute = "", value = "", selector = "") {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.setAttribute(attribute, value);
+        }
+    }
+
+    function removeAttributeFromElement(attribute = "", selector = "") {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.removeAttribute(attribute);
+        }
+    }
+
+    addTextFieldEventListeners();
+
+    var buttonReference;
+
+    function addButtonEventListeners(selector = "") {
+        const button = document.querySelector(selector);
+        if (button) {
+            button.addEventListener("mousedown", handleButtonMouseDown);
+            button.addEventListener("mouseup", handleButtonMouseUp);
+        }
+    }
+
+    function handleButtonMouseDown(event) {
+        const button = event.target.closest("button");
+        if (button) {
+            const buttonInformation = button.getBoundingClientRect();
+            const xOffset = buttonInformation.height / 2;
+            const xCoordinate = (event.pageX - buttonInformation.left) - (buttonInformation.width / 2) - xOffset;
+            const yCoordinate = (event.pageY - buttonInformation.top) - (buttonInformation.height / 2);
+            const buttonId = "#" + button.id;
+            button.style.setProperty("--x-coordinate", `${xCoordinate}px`);
+            button.style.setProperty("--y-coordinate", `${yCoordinate}px`);
+            button.style.setProperty("--x-offset", `-${xOffset}px`);
+            if (buttonId.length > 1) {
+                buttonReference = button;
+                addAttributeToElement("mousedown", "", buttonId);
+            }
+        }
+    }
+
+    function handleButtonMouseUp(event) {
+        const button = event.target.closest("button");
+        if (button) {
+            const buttonId = "#" + button.id;
+            if (buttonId.length > 1) {
+                removeAttributeFromElement("mousedown", buttonId);
+            }
+        }
+    }
+
+    addButtonEventListeners("#email-sign-in-create-account-button");
+    addButtonEventListeners("#password-sign-in-forgot-password-button");
+    addButtonEventListeners("#email-sign-in-next-button");
+    addButtonEventListeners("#password-sign-in-next-button");
+    addButtonEventListeners("#recover-email-next-button");
+    addButtonEventListeners("#send-email-code-send-button");
+
+    function addDocumentEventListeners() {
+        if (document) {
+            document.addEventListener("mouseup", handleDocumentMouseUp);
+            document.addEventListener("keydown", handleDocumentKeyDown);
+        }
+    }
+
+    function handleDocumentMouseUp(event) {
+        if (buttonReference) {
+            const buttonId = "#" + buttonReference.id;
+            if (buttonId.length > 1) {
+                removeAttributeFromElement("mousedown", buttonId);
+            }
+        }
+        const parentButton = event.target.closest("button");
+        if (parentButton) {
+            parentButton.blur();
+        }
+        if (listItemReference) {
+            const listItemId = "#" + listItemReference.id;
+            if (listItemId.length > 1) {
+                removeAttributeFromElement("mousedown", listItemId);
+            }
+        }
+    }
+
+    function handleDocumentKeyDown(event) {
+        if(event.keyCode == 13) {
+            const parentContainer = event.target.closest(".authentication-subcontent");
+            if (parentContainer) {
+                const childButton = parentContainer.querySelector(".authentication-primary-button");
+                if (childButton) {
+                    childButton.click();
+                }
+            }
+            event.preventDefault();
+            return false;
+        }
+    }
+
+    addDocumentEventListeners();
+
+    function addShowPasswordCheckboxEventListeners() {
+        const showPasswordCheckbox = document.querySelector("#password-sign-in-show-password-checkbox");
+        if (showPasswordCheckbox) {
+            showPasswordCheckbox.addEventListener("click", handleShowPasswordCheckboxClick);
+        }
+    }
+
+    function handleShowPasswordCheckboxClick(event) {
+        const showPasswordCheckbox = document.querySelector("#password-sign-in-show-password-checkbox");
+        if (showPasswordCheckbox) {
+            const selector = "#password-sign-in-password-text-field";
+            if (showPasswordCheckbox.checked) {
+                addAttributeToElement("type", "text", selector);
+            }
+            else {
+                addAttributeToElement("type", "password", selector);
+            }
+        }
+    }
+
+    addShowPasswordCheckboxEventListeners();
+
+    function addCheckboxLabelEventListeners() {
+        const checkboxLabel = document.querySelector("#password-sign-in-show-password-checkbox-label");
+        if (checkboxLabel) {
+            checkboxLabel.addEventListener("click", handleCheckboxLabelClick);
+        }
+    }
+
+    function handleCheckboxLabelClick(event) {
+        const showPasswordCheckbox = document.querySelector("#password-sign-in-show-password-checkbox");
+        if (showPasswordCheckbox) {
+            showPasswordCheckbox.checked = !showPasswordCheckbox.checked ? true : false;
+            handleShowPasswordCheckboxClick();
+        }
+    }
+
+    addCheckboxLabelEventListeners();
+
+    async function validateEmailSignInEmailTextField() {
+        const emailTextField = document.querySelector("#email-sign-in-email-text-field");
+        if (emailTextField) {
+            let emailTextFieldValue = emailTextField.value;
+                emailTextFieldValue = emailTextFieldValue.trim();
+            if (emailTextFieldValue.length === 0) {
+                showEmailTextFieldError("Enter an email");
+                return false;
+            }
+            else if (!patternExistsInText(/[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\.[a-zA-Z]{2,3}/, emailTextFieldValue)) {
+                showEmailTextFieldError("Enter a valid email");
+                return false;
+            }
+            else if (!emailExistsInDatabase(emailTextFieldValue)) {
+                showEmailTextFieldError("Couldn't find your BluTube account");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    }
+
+    function patternExistsInText(pattern = "", text = "") {
+        return text.match(pattern) != null;
+    }
+
+    function emailExistsInDatabase(email = "") {
+        return true;
+    }
+
+    function showEmailTextFieldError(text = "") {
+        addAttributeToElement("error", "", "#email-sign-in-email-text-field");
+        addAttributeToElement("error", "", "#email-sign-in-email-text-field-feedback-error");
+        addTextToElement(text, "#email-sign-in-email-text-field-feedback-error-text");
+        focusOnEmailSignInEmailTextField();
+    }
+
+    function hideEmailTextFieldError() {
+        removeAttributeFromElement("error", "#email-sign-in-email-text-field");
+        removeAttributeFromElement("error", "#email-sign-in-email-text-field-feedback-error");
+    }
+
+    function addTextToElement(text = "", selector = "") {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.innerText = text;
+        }
+    }
+
+    function focusOnEmailSignInEmailTextField() {
+        focusOnElement("#email-sign-in-email-text-field");
+    }
+
+    function focusOnElement(selector = "") {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.focus();
+        }
+    }
+
+    function addEmailSignInNextButtonEventListeners() {
+        const emailSignInNextButton = document.querySelector("#email-sign-in-next-button");
+        if (emailSignInNextButton) {
+            emailSignInNextButton.addEventListener("click", handleEmailSignInNextButtonClick);
+        }
+    }
+
+    async function handleEmailSignInNextButtonClick(event) {
+        hideEmailTextFieldError();
+        const emailTextFieldIsValid = await validateEmailTextField();
+        if (emailTextFieldIsValid) {
+            alert("NEXT");
+        }
+    }
+
+    addEmailSignInNextButtonEventListeners();
+
+    async function validatePasswordSignInPasswordTextField() {
+        const passwordTextField = document.querySelector("#password-sign-in-password-text-field");
+        if (passwordTextField) {
+            const passwordTextFieldValue = passwordTextField.value;
+            if (passwordTextFieldValue.length === 0) {
+                showPasswordTextFieldError("Enter a password");
+                return false;
+            }
+            else if (!passwordIsCorrect(passwordTextFieldValue)) {
+                showPasswordTextFieldError("Wrong password. Try again or click Forgot password to reset it.");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    }
+
+    function showPasswordTextFieldError(text = "") {
+        addAttributeToElement("error", "", "#password-sign-in-password-text-field");
+        addAttributeToElement("error", "", "#password-sign-in-password-text-field-feedback-error");
+        addTextToElement(text, "#password-sign-in-password-text-field-feedback-error-text");
+        focusOnPasswordSignInPasswordTextField();
+    }
+
+    function focusOnPasswordSignInPasswordTextField() {
+        focusOnElement("#password-sign-in-password-text-field");
+    }
+
+    function hidePasswordTextFieldError() {
+        removeAttributeFromElement("error", "#password-sign-in-password-text-field");
+        removeAttributeFromElement("error", "#password-sign-in-password-text-field-feedback-error");
+    }
+
+    function passwordIsCorrect(password = "") {
+        return false;
+    }
+
+    function addPasswordSignInPasswordNextButtonEventListeners() {
+        const nextButton = document.querySelector("#password-sign-in-next-button");
+        if (nextButton) {
+            nextButton.addEventListener("click", handlePasswordSignInNextButtonClick);
+        }
+    }
+
+    async function handlePasswordSignInNextButtonClick(event) {
+        hidePasswordTextFieldError();
+        const passwordTextFieldIsValid = await validatePasswordSignInPasswordTextField();
+        if (passwordTextFieldIsValid) {
+            alert("NEXT");
+        }
+    }
+
+    addPasswordSignInPasswordNextButtonEventListeners();
+
+    function addRecoverEmailNextButtonEventListeners() {
+        const nextButton = document.querySelector("#recover-email-next-button");
+        if (nextButton) {
+            nextButton.addEventListener("click", handleRecoverEmailNextButtonClick);
+        }
+    }
+
+    function handleRecoverEmailNextButtonClick(event) {
+        hidePhoneOrEmailTextFieldError();
+        const phoneOrEmailTextFieldIsValid = validateRecoverEmailPhoneOrEmailTextField();
+        if (phoneOrEmailTextFieldIsValid) {
+            alert("NEXT");
+        }
+    }
+
+    addRecoverEmailNextButtonEventListeners();
+
+    function hidePhoneOrEmailTextFieldError() {
+        removeAttributeFromElement("error", "#recover-email-phone-or-email-text-field");
+        removeAttributeFromElement("error", "#recover-email-phone-or-email-text-field-feedback-error");
+    }
+
+    function validateRecoverEmailPhoneOrEmailTextField() {
+        const phoneOrEmailTextField = document.querySelector("#recover-email-phone-or-email-text-field");
+        if (phoneOrEmailTextField) {
+            const phoneOrEmailTextFieldValue = phoneOrEmailTextField.value;
+            const phonePattern = /[0-9]{9,10}/;
+            const emailPattern = /[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\.[a-zA-Z]{2,3}/;
+            if (patternExistsInText(phonePattern, phoneOrEmailTextFieldValue) || patternExistsInText(emailPattern, phoneOrEmailTextFieldValue)) {
+                return true;
+            }
+            else {
+                showPhoneOrEmailTextFieldError("Enter a valid email or phone number");
+                return false;
+            }
+        }
+    }
+
+    function showPhoneOrEmailTextFieldError(text = "") {
+        addAttributeToElement("error", "", "#recover-email-phone-or-email-text-field");
+        addAttributeToElement("error", "", "#recover-email-phone-or-email-text-field-feedback-error");
+        addTextToElement(text, "#recover-email-phone-or-email-text-field-feedback-error-text");
+        focusOnRecoverEmailPhoneOrEmailTextField();
+    }
+
+    function focusOnRecoverEmailPhoneOrEmailTextField() {
+        focusOnElement("#recover-email-phone-or-email-text-field");
+    }
+
+    function addVerifyNameNextButtonEventListeners() {
+        const nextButton = document.querySelector("#verify-name-next-button");
+        if (nextButton) {
+            nextButton.addEventListener("click", handleVerifyNameNextButtonClick);
+        }
+    }
+
+    function handleVerifyNameNextButtonClick(event) {
+        hideFirstNameTextFieldError();
+        const firstNameTextFieldIsValid = validateVerifyNameFirstNameTextField();
+        if (firstNameTextFieldIsValid) {
+            alert("NEXT");
+        }
+    }
+
+    addVerifyNameNextButtonEventListeners();
+
+    function hideFirstNameTextFieldError() {
+        removeAttributeFromElement("error", "#verify-name-first-name-text-field");
+        removeAttributeFromElement("error", "#verify-name-first-name-text-field-feedback-error");
+    }
+
+    function validateVerifyNameFirstNameTextField() {
+        const firstNameTextField = document.querySelector("#verify-name-first-name-text-field");
+        if (firstNameTextField) {
+            const firstNameTextFieldValue = firstNameTextField.value;
+            if (firstNameTextFieldValue.length === 0) {
+                showFirstNameTextFieldError("Enter first name");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    }
+
+    function showFirstNameTextFieldError(text = "") {
+        addAttributeToElement("error", "", "#verify-name-first-name-text-field");
+        addAttributeToElement("error", "", "#verify-name-first-name-text-field-feedback-error");
+        addTextToElement(text, "#verify-name-first-name-text-field-feedback-error-text");
+        focusOnVerifyNameFirstNameTextField();
+    }
+
+    function focusOnVerifyNameFirstNameTextField() {
+        focusOnElement("#verify-name-first-name-text-field");
+    }
+
+    var listItemReference;
+
+    function addListItemEventListeners(selector = "") {
+        const button = document.querySelector(selector);
+        if (button) {
+            button.addEventListener("mousedown", handleListItemMouseDown);
+            button.addEventListener("mouseup", handleListItemMouseUp);
+        }
+    }
+
+    function handleListItemMouseDown(event) {
+        const listItem = event.target;
+        const overlay = listItem.querySelector(".authentication-dropdown-list-item-overlay");
+        if (listItem && overlay) {
+            const listItemInformation = listItem.getBoundingClientRect();
+            const left = (event.pageX - listItemInformation.left);
+            const top = (event.pageY - listItemInformation.top);
+            const width = listItemInformation.width;
+            const listItemId = "#" + listItem.id;
+            overlay.style.setProperty("left", `${left}px`);
+            overlay.style.setProperty("top", `${top}px`);
+            overlay.style.setProperty("height", `${width}px`);
+            overlay.style.setProperty("width", `${width}px`);
+            if (listItemId.length > 1) {
+                listItemReference = listItem;
+                addAttributeToElement("mousedown", "", listItemId);
+            }
+        }
+    }
+
+    function handleListItemMouseUp(event) {
+        const listItem = event.target;
+        if (listItem) {
+            const listItemId = "#" + listItem.id;
+            if (listItemId.length > 1) {
+                removeAttributeFromElement("mousedown", listItemId);
+            }
+        }
+    }
+
+    addListItemEventListeners("#footer-dropdown-list-item");
+
+    // focusOnEmailSignInEmailTextField();
+    // focusOnPasswordSignInPasswordTextField();
+    // focusOnRecoverEmailPhoneOrEmailTextField();
+    // focusOnVerifyNameFirstNameTextField();
+
+</script>
+
+</html>
