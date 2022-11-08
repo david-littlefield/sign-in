@@ -227,7 +227,7 @@
         }
 
         #send-email-code-subcontent {
-            /* display: none; */
+            display: none;
         }
 
         .authentication-heading {
@@ -237,29 +237,6 @@
             font-weight: 400;
             line-height: 32px;
             text-align: center;
-        }
-
-        #social-sign-in-heading {
-            margin-top: 16px;
-        }
-
-        #email-sign-in-heading {
-            margin-top: 16px;
-        }
-
-        #password-sign-in-heading {
-            margin-top: 16px;
-        }
-
-        #recover-email-heading {
-            margin-top: 16px;
-        }
-
-        #verify-name-heading {
-            margin-top: 16px;
-        }
-
-        #send-email-code-heading {
             margin-top: 16px;
         }
 
@@ -396,6 +373,10 @@
             margin-top: 24px;
         }
 
+        #enter-email-code-form {
+            margin-top: 24px;
+        }
+
         .authentication-account-list {
             display: flex;
             flex-direction: column;
@@ -504,6 +485,10 @@
 
         #verify-name-last-name-text-field-container {
             margin-top: 24px;
+        }
+
+        #enter-email-code-text-field-container {
+            margin-top: 19px;
         }
 
         .authentication-text-field {
@@ -871,6 +856,10 @@
         #send-email-code-buttons-container {
             margin-top: 32px;
             margin-bottom: 26px;
+        }
+
+        #enter-email-code-buttons-container {
+            margin-top: 36px;
         }
 
         .authentication-secondary-button {
@@ -1714,16 +1703,63 @@
                             <div class="background authentication-graphic-background">
                             </div>
                         </div>
+                        <div id="send-email-code-subtext" class="authentication-subtext">
+                            Google will send a verification code to david_littlefield@outlook.com
+                        </div>
                     </form>
-                    <div id="send-email-code-subtext" class="authentication-subtext">
-                        Google will send a verification code to david_littlefield@outlook.com
-                    </div>
                     <div id="send-email-code-buttons-container" class="container authentication-buttons-container">
                         <button id="send-email-code-send-button" class="button authentication-primary-button">
                             <div class="overlay authentication-primary-button-overlay">
                             </div>
                             <div class="text authentication-primary-button-text">
                                 Send
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="enter-email-code-subcontent" class="subcontent authentication-subcontent">
+                    <h1 id="enter-email-code-heading" class="heading authentication-heading">
+                        Enter the code
+                    </h1>
+                    <div id="enter-email-code-subheading" class="subheading authentication-subheading">
+                        To help keep your account safe, Google wants to make sure it's really you trying to sign in
+                    </div>
+                    <form id="enter-email-code-form" class="form authentication-form" method="post" novalidate>
+                        <div id="enter-email-code-subtext" class="authentication-subtext">
+                            An email with a verification code was just sent to david_littlefield@outlook.com
+                        </div>
+                        <div id="enter-email-code-text-field-container" class="container authentication-text-field-container">
+                            <input id="enter-email-code-text-field" class="text-field authentication-text-field" type="text">
+                            <div class="label authentication-text-field-label">
+                                Enter code
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-gray">
+                            </div>
+                            <div class="border authentication-text-field-border authentication-text-field-border-color">
+                            </div>
+                        </div>
+                        <div class="container authentication-feedback-container">
+                            <div class="feedback-hint authentication-feedback-hint">
+                                <div class="text authentication-feedback-hint-text">
+                                </div>
+                            </div>
+                            <div id="enter-email-code-text-field-feedback-error" class="feedback-error authentication-feedback-error">
+                                <div class="icon authentication-feedback-error-icon">
+                                    <img class="image authentication-feedback-error-image" height="16" width="16" src="./error.svg">
+                                </div>
+                                <div id="enter-email-code-text-field-feedback-error-text" class="text authentication-feedback-error-text">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="enter-email-code-buttons-container" class="container authentication-buttons-container">
+                        <button id="enter-email-code-next-button" class="button authentication-primary-button">
+                            <div class="overlay authentication-primary-button-overlay">
+                            </div>
+                            <div class="text authentication-primary-button-text">
+                                Next
                             </div>
                         </button>
                     </div>
@@ -1868,6 +1904,7 @@
     addButtonEventListeners("#password-sign-in-next-button");
     addButtonEventListeners("#recover-email-next-button");
     addButtonEventListeners("#send-email-code-send-button");
+    addButtonEventListeners("#enter-email-code-send-button");
 
     function addDocumentEventListeners() {
         if (document) {
@@ -2022,7 +2059,7 @@
         hideEmailTextFieldError();
         const emailTextFieldIsValid = await validateEmailTextField();
         if (emailTextFieldIsValid) {
-            alert("NEXT");
+            alert("SUCCESS");
         }
     }
 
@@ -2077,7 +2114,7 @@
         hidePasswordTextFieldError();
         const passwordTextFieldIsValid = await validatePasswordSignInPasswordTextField();
         if (passwordTextFieldIsValid) {
-            alert("NEXT");
+            alert("SUCCESS");
         }
     }
 
@@ -2094,7 +2131,7 @@
         hidePhoneOrEmailTextFieldError();
         const phoneOrEmailTextFieldIsValid = validateRecoverEmailPhoneOrEmailTextField();
         if (phoneOrEmailTextFieldIsValid) {
-            alert("NEXT");
+            alert("SUCCESS");
         }
     }
 
@@ -2143,7 +2180,7 @@
         hideFirstNameTextFieldError();
         const firstNameTextFieldIsValid = validateVerifyNameFirstNameTextField();
         if (firstNameTextFieldIsValid) {
-            alert("NEXT");
+            alert("SUCCESS");
         }
     }
 
@@ -2221,10 +2258,122 @@
 
     addListItemEventListeners("#footer-dropdown-list-item");
 
+    function addEnterEmailCodeNextButtonEventListeners() {
+        const nextButton = document.querySelector("#enter-email-code-next-button");
+        if (nextButton) {
+            nextButton.addEventListener("click", handleEnterEmailCodeNextButtonClick);
+        }
+    }
+
+    function handleEnterEmailCodeNextButtonClick(event) {
+        hideEnterEmailCodeTextFieldError();
+        const enterEmailCodeTextField = document.querySelector("#enter-email-code-text-field");
+        if (enterEmailCodeTextField) {
+            let enterEmailCodeTextFieldValue = enterEmailCodeTextField.value;
+                enterEmailCodeTextFieldValue = enterEmailCodeTextFieldValue.replaceAll(" ", "");
+            const emailCodeIsValid = validateEmailCode(enterEmailCodeTextFieldValue);
+            if (emailCodeIsValid) {
+                const emailCodeIsVerified = verifyEmailCode(enterEmailCodeTextFieldValue);
+                if (emailCodeIsVerified) {
+                    alert("SUCCESS");
+                }
+            }
+        }
+    }
+
+    addEnterEmailCodeNextButtonEventListeners();
+
+    function hideEnterEmailCodeTextFieldError() {
+        removeAttributeFromElement("error", "#enter-email-code-text-field");
+        removeAttributeFromElement("error", "#enter-email-code-text-field-feedback-error");
+    }
+
+    function validateEmailCode(emailCode = "") {
+        if (emailCode.length === 0) {
+            showEnterEmailCodeTextFieldError("Enter a code");
+            return false;
+        }
+        else if (!patternExistsInText(/^\d+$/, emailCode)) {
+            showEnterEmailCodeTextFieldError("Code has numbers only. Try again.")
+            return false;
+        }
+        else if (emailCode.length < 6 || emailCode.length > 6) {
+            showEnterEmailCodeTextFieldError("Wrong number of digits. Try again.");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function verifyEmailCode(emailCode = "") {
+        const phoneOrEmailTextField = document.querySelector("#recover-email-phone-or-email-text-field");
+        if (phoneOrEmailTextField) {
+            const phoneOrEmailTextFieldValue = phoneOrEmailTextField.value || "david_littlefield@outlook.com";
+            if(!userIsAllowed(phoneOrEmailTextFieldValue)) {
+                showEnterEmailCodeTextFieldError("Too many attempts. Please try again later.");
+                return false;
+            }
+            else if (!emailCodeIsCorrect(phoneOrEmailTextFieldValue, emailCode)) {
+                showEnterEmailCodeTextFieldError("Wrong code. Try again.");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    }
+
+    function userIsAllowed(email = "") {
+        if (email) {
+            const value = getDataFromDatabase("users", "validation_attempts", email);
+            if (value <= 3) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    function emailCodeIsCorrect(email = "", emailCode = "") {
+        if (email) {
+            const value = getDataFromDatabase("users", "email_code", email);
+            console.log(value, emailCode)
+            if (value === emailCode) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    function getDataFromDatabase(table = "", property = "", email = "") {
+        if (property === "validation_attempts") {
+            return "0";
+        }
+        else if (property === "email_code") {
+            return "123456";
+        }
+    }
+
+    function showEnterEmailCodeTextFieldError(text = "") {
+        addAttributeToElement("error", "", "#enter-email-code-text-field");
+        addAttributeToElement("error", "", "#enter-email-code-text-field-feedback-error");
+        addTextToElement(text, "#enter-email-code-text-field-feedback-error-text");
+        focusOnEnterEmailCodeTextField();
+    }
+
+    function focusOnEnterEmailCodeTextField() {
+        focusOnElement("#enter-email-code-text-field");
+    }
+
     // focusOnEmailSignInEmailTextField();
     // focusOnPasswordSignInPasswordTextField();
     // focusOnRecoverEmailPhoneOrEmailTextField();
     // focusOnVerifyNameFirstNameTextField();
+    // focusOnEnterEmailCodeTextField();
 
 </script>
 
